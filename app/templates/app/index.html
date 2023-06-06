@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="eng">
+    <head>
+    <meta charset="UTF8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>user registration </title>
+    </head>
+<body>
+    <h1>Count page</h1>
+    <h2 id="ct"></h2>
+
+    <script>
+        var ws = new WebSocket('ws://127.0.0.1:8000/ws/sc/')
+        //var ws = new WebSocket('ws://127.0.0.1:8000/ws/ac/')
+        ws.onopen = function () {
+            console.log('WebSocket connection open.......')
+            ws.send('Message from client to server......')
+        }
+        // When message is received from server, this will be executed
+        // and sent data is avilable here in 'event'
+        ws.onmessage = function (event) {
+            //Show data on console
+            console.log('Message received from server.....', event.data)
+            // Show data on webpage / frontend
+            document.getElementById("ct").innerText = event.data
+        }
+        //ws.onmessage = function (event) {
+            //console.log('EVENT.....', event)
+            // Show data on console
+            //console.log('Message received from server.....', event.data)
+            // Here event.data is string
+            //console.log('Type of EVENT data: ', typeof (event.data)) 
+            // Now, we have to convert it into javascript object
+            //var data = JSON.parse(event.data)
+            //console.log('parsed data: ', data) 
+            //console.log('Type of parsed data: ', typeof (data)) 
+            // Show data on webpage / frontend
+            //document.getElementById("ct").innerText = data.count
+        //}
+        ws.onerror = function (event) {
+            console.log('WebSocket error occured.....', event)
+        }
+        ws.onclose = function (event) {
+            console.log('WebSocket connection closed.....', event)
+        }
+    </script>
+    
+</body>
+</html>
